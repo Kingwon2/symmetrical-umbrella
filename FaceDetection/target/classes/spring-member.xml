@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:tx="http://www.springframework.org/schema/tx" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/tx
+		http://www.springframework.org/schema/tx/spring-tx.xsd
+		http://www.springframework.org/schema/context                      
+ 		http://www.springframework.org/schema/context/spring-context.xsd">
+ 		
+		<context:annotation-config/>
+		
+		<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"
+		destroy-method="close">
+		<property name="driverClass" value="com.mysql.jdbc.Driver" />
+		<property name="jdbcUrl" value="jdbc:mysql://localhost/spring4fs?characterEncoding=utf8" />
+		<property name="user" value="root" />
+		<property name="password" value="zxcxc357" /> </bean>
+	     
+	    <bean id="celebrityDao" class="com.resemblance.dao.CelebrityDao">
+	    <constructor-arg ref="dataSource" /></bean>
+	    
+	    <bean id="celebrityService" class="com.resemblance.service.CelebrityService">
+	    </bean>
+	    
+	    <bean id="guestBookDao" class="com.resemblance.dao.GuestBookDao">
+	    <constructor-arg ref="dataSource" /></bean>
+	    
+	    <bean id="guestBookService" class="com.resemblance.service.GuestBookService">
+	    </bean>
+	    
+	  
+	    
+	
+		
+		<bean id="faceClassifier" class="com.resemblance.service.FaceClassifier"></bean>
+		<bean id="imageUploadService" class="com.resemblance.service.ImageUploadService">
+			<property name="path" value="C:\\Users\\won\\Desktop\\solo\\ee\\FaceDetection\\savedImage" />
+		</bean>
+		
+		
+	<bean name="multipartResolver"
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<property name="maxUploadSize" value="10000000"></property>
+		 <property name="defaultEncoding" value="utf-8" />
+	</bean>
+
+	
+	<bean id="jsonView" class="org.springframework.web.servlet.view.json.MappingJackson2JsonView">	
+		<property name="contentType" value="application/json;charset=UTF-8"/>
+	</bean>
+
+
+
+</beans>
